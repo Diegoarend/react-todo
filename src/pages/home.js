@@ -24,6 +24,14 @@ export function Home() {
       })
   }
 
+  const onRemove = (id) => {
+    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      method: 'DELETE'
+    }).then(() => {
+      setState(prev => prev.filter(item => item.id !== id))
+    })
+  }
+
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/todos?userId=1')
       .then(response => response.json())
@@ -32,7 +40,7 @@ export function Home() {
   return (
     <div id="app">
       <Form onSuccess={onSuccess} />
-      <TaskList tasks={state} />
+      <TaskList tasks={state} onRemove={onRemove} />
     </div>
   );
 }
